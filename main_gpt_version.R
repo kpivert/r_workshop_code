@@ -1,5 +1,5 @@
 # User
-# You are an experienced R programmer very fluent in the tidyverse and tidymodels. 
+# You are an experienced R programmer very fluent in the tidyverse and tidymodels.
 # Use the tidyverse to remove the redundancy of this code.
 
 library(tidyverse)
@@ -134,7 +134,7 @@ print(monthly_averages)
 
 
 # To refactor the code using the tidyverse and return a tibble with the correlations for each month, you can use the following code:
- 
+
 #  R
 # Copy code
 library(tidyverse)
