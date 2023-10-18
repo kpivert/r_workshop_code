@@ -352,6 +352,8 @@ display: none;
 </div>
 
 
+<div id="r-script-documentation" class="section level1">
+<h1>R Script Documentation</h1>
 <div id="loading-necessary-libraries" class="section level2">
 <h2>Loading necessary libraries</h2>
 <ul>
@@ -360,69 +362,182 @@ display: none;
 <li><strong>Outputs:</strong> None</li>
 </ul>
 <p>```{r}</p>
-<p>library(tidyverse) ```</p>
+<p>library(tidyverse)</p>
+<pre><code>
+## Fetching Data
+
+-   **Required Packages:** None
+
+-   **Inputs:** None
+
+-   **Outputs:** **`data`** - a data frame containing the
+    **`airquality`** dataset
+
+```{r}
+data &lt;- airquality </code></pre>
 </div>
-<div id="fetching-data" class="section level2">
-<h2>Fetching Data</h2>
-<p>Required Packages: None Inputs: None Outputs: data - a data frame
-containing the airquality dataset R Copy code data &lt;- airquality Data
-Cleaning - Remove Rows with NA Required Packages: None Inputs: data - a
-data frame containing the airquality dataset Outputs: data - a cleaned
-data frame with NA rows removed R Copy code data &lt;- data %&gt;%
-filter(!is.na(Ozone), !is.na(Solar.R), !is.na(Wind), !is.na(Temp),
-!is.na(Month), !is.na(Day)) Calculate Average Solar Radiation for Each
-Month Required Packages: tidyverse Inputs: data - a data frame
-containing the airquality dataset, month - the month for which to
-calculate the average Outputs: A numeric value representing the average
-Solar Radiation for the specified month R Copy code
-calculate_average_solar &lt;- function(data, month) { data %&gt;%
-filter(Month == month) %&gt;% summarise(Average_Solar_Radiation =
-mean(Solar.R, na.rm = TRUE)) } Calculate Average Solar Radiation for
-Each Month Using purrr::map_dbl Required Packages: tidyverse, purrr
-Inputs: months - a vector of months (e.g., c(5, 6, 7, 8, 9) Outputs:
-avg_solar - a numeric vector of average Solar Radiation values for each
-month R Copy code months &lt;- 5:9 avg_solar &lt;- map_dbl(months, ~
-calculate_average_solar(data, .x)<span class="math inline">\(Average_Solar_Radiation) Print the Results
-Required Packages: None Inputs: months - a vector of months (e.g., c(5,
-6, 7, 8, 9), avg_solar - a numeric vector of average Solar Radiation
-values Outputs: None R Copy code map2(months, avg_solar, ~
-cat(&quot;Average Solar Radiation for Month&quot;, .x, &quot;:&quot;,
-.y, &quot;\n&quot;)) Calculate Correlation for Each Month Required
-Packages: tidyverse Inputs: data - a data frame containing the
-airquality dataset, month - the month for which to calculate the
-correlation Outputs: A numeric value representing the correlation
-between Ozone and Solar Radiation for the specified month R Copy code
-calculate_correlation &lt;- function(data, month) { data %&gt;%
-filter(Month == month) %&gt;% summarise(Correlation = cor(Ozone,
-Solar.R, use = &quot;complete.obs&quot;)) } Calculate Correlation for
-Each Month Using purrr::map_dbl Required Packages: tidyverse, purrr
-Inputs: months - a vector of months (e.g., c(5, 6, 7, 8, 9) Outputs:
-correlation - a numeric vector of correlation values for each month R
-Copy code correlation &lt;- map_dbl(months, ~
-calculate_correlation(data, .x)\)</span>Correlation) Print the Results
-Required Packages: None Inputs: months - a vector of months (e.g., c(5,
-6, 7, 8, 9), correlation - a numeric vector of correlation values
-Outputs: None R Copy code map2(months, correlation, ~ cat(“Correlation
-for Month”, .x, “:”, .y, “”)) Define a Function to Save Plots Required
-Packages: tidyverse Inputs: data - a data frame containing the
-airquality dataset, month - the month for which to save the plot,
-filename - the filename for the saved plot Outputs: None R Copy code
-save_monthly_plot &lt;- function(data, month, filename) { plot_data
-&lt;- data %&gt;% filter(Month == month)</p>
-<p>g &lt;- ggplot(plot_data, aes(x = Solar.R, y = Ozone, shape =
-factor(Month))) + geom_point() + ggtitle(paste(“Month”, month))</p>
-<p>ggsave(filename, g) } Save Plots for Each Month Using purrr::walk
-Required Packages: tidyverse, purrr Inputs: months - a vector of months
-(e.g., c(5, 6, 7, 8, 9), month_names - a vector of month names (e.g.,
-c(“May”, “June”, “July”, “August”, “September”) Outputs: None R Copy
-code map2(months, c(“May”, “June”, “July”, “August”, “September”), ~
-save_monthly_plot(data, .x, paste(“plot_”, .x, “.png”))) Save Data
-Required Packages: None Inputs: data - a data frame to be saved,
-filename - the filename for the saved CSV Outputs: None R Copy code
-write.csv(data, “cleaned_data.csv”, row.names = FALSE) The comments
-describe the purpose of each function, the required packages, and the
-inputs and outputs of each function. This documentation should make the
-code more understandable and maintainable.</p>
+<div id="data-cleaning---remove-rows-with-na" class="section level2">
+<h2><strong>Data Cleaning - Remove Rows with NA</strong></h2>
+<ul>
+<li><p><strong>Required Packages:</strong> None</p></li>
+<li><p><strong>Inputs:</strong> <strong><code>data</code></strong> - a
+data frame containing the <strong><code>airquality</code></strong>
+dataset</p></li>
+<li><p><strong>Outputs:</strong> <strong><code>data</code></strong> - a
+cleaned data frame with NA rows removed</p></li>
+</ul>
+<p>```{r}</p>
+<p>data &lt;- data %&gt;% filter(!is.na(Ozone), !is.na(Solar.R),
+!is.na(Wind), !is.na(Temp), !is.na(Month), !is.na(Day))</p>
+<pre><code>
+## **Calculate Average Solar Radiation for Each Month**
+
+-   **Required Packages:** **`tidyverse`**
+
+-   **Inputs:** **`data`** - a data frame containing the
+    **`airquality`** dataset, **`month`** - the month for which to
+    calculate the average
+
+-   **Outputs:** A numeric value representing the average Solar
+    Radiation for the specified month
+
+```{r}
+calculate_average_solar &lt;- function(data, month) {
+  data %&gt;%
+    filter(Month == month) %&gt;%
+    summarise(Average_Solar_Radiation = mean(Solar.R, na.rm = TRUE))
+}</code></pre>
+</div>
+<div id="calculate-average-solar-radiation-for-each-month-using-purrrmap_dbl" class="section level2">
+<h2><strong>Calculate Average Solar Radiation for Each Month Using
+<code>purrr::map_dbl</code></strong></h2>
+<ul>
+<li><p><strong>Required Packages:</strong>
+<strong><code>tidyverse</code></strong>,
+<strong><code>purrr</code></strong></p></li>
+<li><p><strong>Inputs:</strong> <strong><code>months</code></strong> - a
+vector of months (e.g.,
+<strong><code>c(5, 6, 7, 8, 9)</code></strong></p></li>
+<li><p><strong>Outputs:</strong> <strong><code>avg_solar</code></strong>
+- a numeric vector of average Solar Radiation values for each
+month</p></li>
+</ul>
+<p>```{r} months &lt;- 5:9 avg_solar &lt;- map_dbl(months, ~
+calculate_average_solar(data, .x)$Average_Solar_Radiation)</p>
+<pre><code>
+## **Print the Results**
+
+-   **Required Packages:** None
+
+-   **Inputs:** **`months`** - a vector of months (e.g.,
+    **`c(5, 6, 7, 8, 9)`**, **`avg_solar`** - a numeric vector of
+    average Solar Radiation values
+
+-   **Outputs:** None
+
+```{r}
+map2(months, avg_solar, ~ cat(&quot;Average Solar Radiation for Month&quot;, .x, &quot;:&quot;, .y, &quot;\n&quot;))
+</code></pre>
+</div>
+<div id="calculate-correlation-for-each-month" class="section level2">
+<h2><strong>Calculate Correlation for Each Month</strong></h2>
+<ul>
+<li><p><strong>Required Packages:</strong>
+<strong><code>tidyverse</code></strong></p></li>
+<li><p><strong>Inputs:</strong> <strong><code>data</code></strong> - a
+data frame containing the <strong><code>airquality</code></strong>
+dataset, <strong><code>month</code></strong> - the month for which to
+calculate the correlation</p></li>
+<li><p><strong>Outputs:</strong> A numeric value representing the
+correlation between Ozone and Solar Radiation for the specified
+month</p></li>
+</ul>
+<p>```{r} calculate_correlation &lt;- function(data, month) { data
+%&gt;% filter(Month == month) %&gt;% summarise(Correlation = cor(Ozone,
+Solar.R, use = “complete.obs”)) }</p>
+<pre><code>
+## **Calculate Correlation for Each Month Using `purrr::map_dbl`**
+
+-   **Required Packages:** **`tidyverse`**, **`purrr`**
+
+-   **Inputs:** **`months`** - a vector of months (e.g.,
+    **`c(5, 6, 7, 8, 9)`**
+
+-   **Outputs:** **`correlation`** - a numeric vector of correlation
+    values for each month
+
+```{r}
+correlation &lt;- map_dbl(months, ~ calculate_correlation(data, .x)$Correlation)
+
+</code></pre>
+</div>
+<div id="print-the-results" class="section level2">
+<h2><strong>Print the Results</strong></h2>
+<ul>
+<li><p><strong>Required Packages:</strong> None</p></li>
+<li><p><strong>Inputs:</strong> <strong><code>months</code></strong> - a
+vector of months (e.g., <strong><code>c(5, 6, 7, 8, 9)</code></strong>,
+<strong><code>correlation</code></strong> - a numeric vector of
+correlation values</p></li>
+<li><p><strong>Outputs:</strong> None</p></li>
+</ul>
+<p>```{r} map2(months, correlation, ~ cat(“Correlation for Month”, .x,
+“:”, .y, “”))</p>
+<pre><code>
+## **Define a Function to Save Plots**
+
+-   **Required Packages:** **`tidyverse`**
+
+-   **Inputs:** **`data`** - a data frame containing the
+    **`airquality`** dataset, **`month`** - the month for which to save
+    the plot, **`filename`** - the filename for the saved plot
+
+-   **Outputs:** None
+
+```{r}
+save_monthly_plot &lt;- function(data, month, filename) {
+  plot_data &lt;- data %&gt;%
+    filter(Month == month)
+  
+  g &lt;- ggplot(plot_data, aes(x = Solar.R, y = Ozone, shape = factor(Month))) +
+    geom_point() +
+    ggtitle(paste(&quot;Month&quot;, month))
+  
+  ggsave(filename, g)
+}
+
+</code></pre>
+</div>
+<div id="save-plots-for-each-month-using-purrrwalk" class="section level2">
+<h2><strong>Save Plots for Each Month Using
+<code>purrr::walk</code></strong></h2>
+<ul>
+<li><p><strong>Required Packages:</strong>
+<strong><code>tidyverse</code></strong>,
+<strong><code>purrr</code></strong></p></li>
+<li><p><strong>Inputs:</strong> <strong><code>months</code></strong> - a
+vector of months (e.g., <strong><code>c(5, 6, 7, 8, 9)</code></strong>,
+<strong><code>month_names</code></strong> - a vector of month names
+(e.g.,
+<strong><code>c(&quot;May&quot;, &quot;June&quot;, &quot;July&quot;, &quot;August&quot;, &quot;September&quot;)</code></strong></p></li>
+<li><p><strong>Outputs:</strong> None</p></li>
+</ul>
+<p>```{r} map2(months, c(“May”, “June”, “July”, “August”, “September”),
+~ save_monthly_plot(data, .x, paste(“plot_”, .x, “.png”)))</p>
+<pre><code>
+## **Save Data**
+
+-   **Required Packages:** None
+
+-   **Inputs:** **`data`** - a data frame to be saved, **`filename`** -
+    the filename for the saved CSV
+
+-   **Outputs:** None
+
+```{r}
+write.csv(data, &quot;cleaned_data.csv&quot;, row.names = FALSE)
+</code></pre>
+</div>
 </div>
 
 
